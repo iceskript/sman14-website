@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Tambahkan ini untuk navigasi
 import { Phone, Mail, Search, LogIn, ChevronDown, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate(); // Inisialisasi fungsi navigasi
 
   const menuItems = [
-    { name: 'BERANDA', dropdown: false },
+    { name: 'BERANDA', dropdown: false, path: '/' },
     { name: 'PROFIL', dropdown: true, items: ['Sejarah', 'Visi & Misi', 'Struktur Organisasi'] },
     { name: 'BERITA', dropdown: true, items: ['Berita Terbaru', 'Pengumuman', 'Agenda'] },
     { name: 'INFORMASI', dropdown: true, items: ['Pendaftaran', 'Kurikulum', 'Fasilitas'] },
@@ -45,7 +47,11 @@ const Navbar = () => {
               <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
 
-            <button className="bg-[#00B4D8] text-white px-4 h-[28px] rounded-full font-extrabold text-[11px] flex items-center gap-1.5 active:scale-95 shadow-sm hover:bg-[#0096b4] transition-all">
+            {/* Navigasi ke Halaman Login */}
+            <button 
+              onClick={() => navigate('/login')}
+              className="bg-[#00B4D8] text-white px-4 h-[28px] rounded-full font-extrabold text-[11px] flex items-center gap-1.5 active:scale-95 shadow-sm hover:bg-[#0096b4] transition-all"
+            >
               <LogIn size={13} /> LOGIN
             </button>
           </div>
@@ -57,10 +63,12 @@ const Navbar = () => {
       <nav className="h-[70px] lg:h-[90px] w-full border-b border-gray-100 bg-white">
         <div className="max-w-[1440px] mx-auto h-full px-5 lg:px-[60px] flex justify-between items-center">
           
-          {/* Branding Logo */}
-          <div className="flex items-center gap-[10px] lg:gap-[15px] cursor-pointer">
+          {/* Branding Logo - Klik untuk kembali ke Beranda */}
+          <div 
+            className="flex items-center gap-[10px] lg:gap-[15px] cursor-pointer"
+            onClick={() => navigate('/')}
+          >
             <div className="w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] flex items-center justify-center shrink-0">
-              {/* Path langsung ke root karena file ada di folder public */}
               <img src="/logo-smapas.png" alt="Logo SMAN 14" className="max-w-full max-h-full object-contain" />
             </div>
             <div className="flex flex-col justify-center text-left">
@@ -81,6 +89,7 @@ const Navbar = () => {
                 className="relative group cursor-pointer flex items-center h-full"
                 onMouseEnter={() => menu.dropdown && setActiveDropdown(menu.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
+                onClick={() => !menu.dropdown && menu.path && navigate(menu.path)}
               >
                 <div className="flex items-center gap-[3px] hover:text-[#00B4D8] transition-colors py-8">
                   {menu.name}
@@ -109,18 +118,16 @@ const Navbar = () => {
       </nav>
 
       {/* --- SIDEBAR MOBILE --- */}
-      {/* Overlay Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/50 transition-opacity duration-300 xl:hidden z-[60] ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Sidebar Content */}
       <div className={`fixed top-0 right-0 h-full w-[85%] max-w-[350px] bg-white z-[70] shadow-2xl transition-transform duration-300 ease-in-out transform xl:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         
         {/* Header Sidebar */}
         <div className="flex justify-between items-center p-5 border-b border-gray-100 shrink-0">
-           <div className="w-[40px] h-[40px] flex items-center justify-center">
+           <div className="w-[40px] h-[40px] flex items-center justify-center cursor-pointer" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
              <img src="/logo-smapas.png" alt="Logo" className="max-w-full max-h-full object-contain" />
            </div>
            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
@@ -128,9 +135,8 @@ const Navbar = () => {
            </button>
         </div>
 
-        {/* Body Sidebar (Scrollable) */}
+        {/* Body Sidebar */}
         <div className="flex-grow overflow-y-auto p-5">
-           {/* Search Mobile - Fix Auto Zoom dengan text-[16px] */}
            <div className="relative mb-6">
               <input 
                 type="text" 
@@ -140,19 +146,24 @@ const Navbar = () => {
               <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
            </div>
 
-           {/* Menu List Mobile */}
            <ul className="flex flex-col gap-1">
              {menuItems.map((menu) => (
                <li key={menu.name} className="border-b border-gray-50 last:border-none">
                  <div 
                     className="flex justify-between items-center py-4 text-[14px] font-extrabold text-gray-800 uppercase active:text-[#00B4D8]" 
-                    onClick={() => menu.dropdown ? (activeDropdown === menu.name ? setActiveDropdown(null) : setActiveDropdown(menu.name)) : setIsMobileMenuOpen(false)}
+                    onClick={() => {
+                      if (menu.dropdown) {
+                        activeDropdown === menu.name ? setActiveDropdown(null) : setActiveDropdown(menu.name);
+                      } else {
+                        menu.path && navigate(menu.path);
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
                  >
                     {menu.name}
                     {menu.dropdown && <ChevronDown size={18} className={`transition-transform duration-200 ${activeDropdown === menu.name ? 'rotate-180 text-[#00B4D8]' : ''}`} />}
                  </div>
 
-                 {/* Dropdown Mobile */}
                  {menu.dropdown && activeDropdown === menu.name && (
                    <ul className="bg-gray-50 rounded-lg mb-4 overflow-hidden animate-in slide-in-from-top-1 duration-200">
                      {menu.items?.map((sub) => (
@@ -167,9 +178,12 @@ const Navbar = () => {
            </ul>
         </div>
 
-        {/* Footer Sidebar (Fixed Login Button) */}
+        {/* Footer Sidebar - Navigasi ke Halaman Login */}
         <div className="p-5 border-t border-gray-100 shrink-0 bg-white">
-          <button className="w-full bg-[#00B4D8] text-white h-[48px] rounded-lg font-black text-[14px] flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all hover:bg-[#0096b4]">
+          <button 
+            onClick={() => { navigate('/login'); setIsMobileMenuOpen(false); }}
+            className="w-full bg-[#00B4D8] text-white h-[48px] rounded-lg font-black text-[14px] flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all hover:bg-[#0096b4]"
+          >
             <LogIn size={20} /> LOGIN ADMIN
           </button>
         </div>
