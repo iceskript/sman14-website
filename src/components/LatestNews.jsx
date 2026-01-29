@@ -6,37 +6,36 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 const LatestNews = () => {
-  // Saya tambahkan menjadi 5 data berita agar bisa di-slide lebih banyak
   const newsData = [
     {
       id: 1,
       date: 'Monday 31 August 2021',
       title: 'Lorem ipsum dolor sit amet consectetur adipiscing elit...',
-      image: '/news1.jpg' 
+      image: '/news1.png' 
     },
     {
       id: 2,
       date: 'Tuesday 01 September 2021',
       title: 'Quisque faucibus ex sapien vitae pellentesque sem placerat...',
-      image: '/news2.jpg'
+      image: '/news2.png'
     },
     {
       id: 3,
       date: 'Wednesday 02 September 2021',
       title: 'In id cursus mi. Donec efficitur, urna a pelentesque...',
-      image: '/news3.jpg'
+      image: '/news3.png'
     },
     {
       id: 4,
       date: 'Thursday 03 September 2021',
       title: 'Maecenas nec sem quis magna efficitur vulputate...',
-      image: '/news4.jpg'
+      image: '/news4.png'
     },
     {
       id: 5,
       date: 'Friday 04 September 2021',
       title: 'Persiapan Ujian Sekolah SMAN 14 Samarinda Tahun Ajaran 2026...',
-      image: '/news5.jpg'
+      image: '/news5.png'
     }
   ];
 
@@ -55,18 +54,24 @@ const LatestNews = () => {
           <Swiper
             modules={[Pagination, Autoplay]}
             spaceBetween={30} 
-            slidesPerView={1} // Default mobile 1 kolom
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            slidesPerView={1}
+            /* PERBAIKAN ANIMASI GESER: speed diturunkan agar lebih cepat (default biasanya 300ms) */
+            speed={400} 
+            autoplay={{ 
+              delay: 4000, 
+              disableOnInteraction: false,
+              /* Memastikan transisi selesai dengan cepat sebelum memulai delay berikutnya */
+              waitForTransition: true 
+            }}
             pagination={{ clickable: true }}
             breakpoints={{
-              768: { slidesPerView: 2 }, // Tablet 2 kolom
-              1024: { slidesPerView: 3 }, // Laptop/Desktop TETAP 3 kolom sesuai permintaanmu
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
             }}
             className="!pb-20" 
           >
             {newsData.map((news) => (
               <SwiperSlide key={news.id} className="h-auto">
-                {/* Shadow XL tegas tanpa glow */}
                 <div className="bg-white rounded-[20px] overflow-hidden shadow-xl border border-gray-100 flex flex-col h-full mb-8 mx-2">
                   
                   <div className="h-[240px] bg-[#E5E7EB] relative group overflow-hidden">

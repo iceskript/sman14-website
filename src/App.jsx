@@ -5,7 +5,9 @@ import Hero from './components/Hero';
 import Sambutan from './components/Sambutan';
 import LatestNews from './components/LatestNews';
 import ScrollToTop from './components/ScrollToTop';
-import Login from './pages/Login'; // Pastikan file ini ada di src/pages/Login.jsx
+import Login from './pages/Login';
+import VisiMisi from './components/VisiMisi';
+import ProgramUnggulan from './components/ProgramUnggulan';
 
 function App() {
   return (
@@ -14,13 +16,17 @@ function App() {
         <Routes>
           {/* Rute Halaman Utama */}
           <Route path="/" element={
-            <>
+            <div className="flex flex-col"> 
               <Navbar />
-              <Hero />
-              <Sambutan />
-              <LatestNews />
+              <main>
+                <Hero />
+                <Sambutan />
+                <LatestNews />
+                <VisiMisi />
+                <ProgramUnggulan />
+              </main>
               <ScrollToTop />
-            </>
+            </div>
           } />
 
           {/* Rute Halaman Login */}

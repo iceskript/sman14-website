@@ -27,7 +27,8 @@ const Hero = () => {
 
       {/* 3. Konten Teks */}
       <div className="relative max-w-[1440px] mx-auto h-full px-5 lg:px-[60px] flex flex-col justify-center items-start z-10">
-        <div className="max-w-[850px] w-full"> 
+        {/* PERBAIKAN: Ditambahkan mt-24 (mobile) dan lg:mt-32 (desktop) untuk menurunkan posisi teks */}
+        <div className="max-w-[850px] w-full mt-24 lg:mt-32"> 
           <h1 className="text-[28px] md:text-[40px] lg:text-[52px] font-[900] text-white leading-[1.2] lg:leading-[1.15] tracking-tight mb-6 lg:mb-8 drop-shadow-2xl text-left">
             Selamat datang, <br />
             Di Website SMA Negeri 14 <br />
