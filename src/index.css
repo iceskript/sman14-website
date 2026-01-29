@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@theme {
+  --font-urbanist: "Urbanist", sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden; /* Mencegah scroll ke samping */
+  overflow-y: auto;   /* Membolehkan scroll ke bawah jika konten panjang */
+}
+#root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
