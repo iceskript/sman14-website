@@ -18,9 +18,11 @@ const Navbar = () => {
   return (
     <header className="w-full font-urbanist bg-white shadow-sm sticky top-0 z-50">
       
-      {/* --- TOP BAR (Area Abu-abu) --- */}
+      {/* --- TOP BAR (Desktop Only) --- */}
       <div className="hidden lg:block bg-[#EAEAEA] h-[42px] w-full border-b border-gray-200">
         <div className="max-w-[1440px] mx-auto h-full px-[60px] flex justify-between items-center text-[12px] font-bold text-[#333]">
+          
+          {/* Kontak Kiri */}
           <div className="flex items-center gap-[25px]">
             <div className="flex items-center gap-[6px]">
               <Phone size={14} className="text-gray-700" />
@@ -32,6 +34,7 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* Search & Login Desktop */}
           <div className="flex items-center gap-4">
             <div className="relative group">
               <input 
@@ -41,18 +44,23 @@ const Navbar = () => {
               />
               <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
+
             <button className="bg-[#00B4D8] text-white px-4 h-[28px] rounded-full font-extrabold text-[11px] flex items-center gap-1.5 active:scale-95 shadow-sm hover:bg-[#0096b4] transition-all">
               <LogIn size={13} /> LOGIN
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* --- MAIN NAVBAR --- */}
+      {/* --- MAIN NAVBAR (Logo & Desktop Menu) --- */}
       <nav className="h-[70px] lg:h-[90px] w-full border-b border-gray-100 bg-white">
         <div className="max-w-[1440px] mx-auto h-full px-5 lg:px-[60px] flex justify-between items-center">
+          
+          {/* Branding Logo */}
           <div className="flex items-center gap-[10px] lg:gap-[15px] cursor-pointer">
             <div className="w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] flex items-center justify-center shrink-0">
+              {/* Path langsung ke root karena file ada di folder public */}
               <img src="/logo-smapas.png" alt="Logo SMAN 14" className="max-w-full max-h-full object-contain" />
             </div>
             <div className="flex flex-col justify-center text-left">
@@ -65,6 +73,7 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* Menu Navigasi Desktop */}
           <ul className="hidden xl:flex items-center gap-[24px] text-[13px] font-[900] text-black uppercase tracking-tight h-full">
             {menuItems.map((menu) => (
               <li 
@@ -78,8 +87,9 @@ const Navbar = () => {
                   {menu.dropdown && <ChevronDown size={12} className="opacity-60" />}
                 </div>
 
+                {/* Dropdown Desktop */}
                 {menu.dropdown && activeDropdown === menu.name && (
-                  <ul className="absolute left-0 top-[85px] w-[200px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50">
+                  <ul className="absolute left-0 top-[85px] w-[200px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                     {menu.items.map((sub) => (
                       <li key={sub} className="px-5 py-2.5 text-[12px] font-bold text-gray-700 hover:bg-gray-50 hover:text-[#00B4D8] transition-all border-b border-gray-50 last:border-none">
                         {sub}
@@ -91,44 +101,64 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <button className="xl:hidden p-2 text-gray-700" onClick={() => setIsMobileMenuOpen(true)}>
+          {/* Hamburger Menu Mobile Toggle */}
+          <button className="xl:hidden p-2 text-gray-700 active:scale-90 transition-transform" onClick={() => setIsMobileMenuOpen(true)}>
             <Menu size={32} />
           </button>
         </div>
       </nav>
 
       {/* --- SIDEBAR MOBILE --- */}
+      {/* Overlay Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/50 transition-opacity duration-300 xl:hidden z-[60] ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
+      {/* Sidebar Content */}
       <div className={`fixed top-0 right-0 h-full w-[85%] max-w-[350px] bg-white z-[70] shadow-2xl transition-transform duration-300 ease-in-out transform xl:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        
+        {/* Header Sidebar */}
         <div className="flex justify-between items-center p-5 border-b border-gray-100 shrink-0">
            <div className="w-[40px] h-[40px] flex items-center justify-center">
              <img src="/logo-smapas.png" alt="Logo" className="max-w-full max-h-full object-contain" />
            </div>
-           <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500">
+           <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
              <X size={28} />
            </button>
         </div>
 
+        {/* Body Sidebar (Scrollable) */}
         <div className="flex-grow overflow-y-auto p-5">
+           {/* Search Mobile - Fix Auto Zoom dengan text-[16px] */}
            <div className="relative mb-6">
-              <input type="text" placeholder="search..." className="w-full h-[40px] bg-gray-100 rounded-full px-10 text-[13px] outline-none border border-transparent focus:border-[#00B4D8]" />
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input 
+                type="text" 
+                placeholder="search..." 
+                className="w-full h-[45px] bg-gray-100 rounded-full px-10 text-[16px] outline-none border border-transparent focus:border-[#00B4D8] transition-all" 
+              />
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
            </div>
+
+           {/* Menu List Mobile */}
            <ul className="flex flex-col gap-1">
              {menuItems.map((menu) => (
                <li key={menu.name} className="border-b border-gray-50 last:border-none">
-                 <div className="flex justify-between items-center py-4 text-[14px] font-extrabold text-gray-800 uppercase" onClick={() => menu.dropdown ? (activeDropdown === menu.name ? setActiveDropdown(null) : setActiveDropdown(menu.name)) : setIsMobileMenuOpen(false)}>
+                 <div 
+                    className="flex justify-between items-center py-4 text-[14px] font-extrabold text-gray-800 uppercase active:text-[#00B4D8]" 
+                    onClick={() => menu.dropdown ? (activeDropdown === menu.name ? setActiveDropdown(null) : setActiveDropdown(menu.name)) : setIsMobileMenuOpen(false)}
+                 >
                     {menu.name}
-                    {menu.dropdown && <ChevronDown size={18} className={activeDropdown === menu.name ? 'rotate-180' : ''} />}
+                    {menu.dropdown && <ChevronDown size={18} className={`transition-transform duration-200 ${activeDropdown === menu.name ? 'rotate-180 text-[#00B4D8]' : ''}`} />}
                  </div>
+
+                 {/* Dropdown Mobile */}
                  {menu.dropdown && activeDropdown === menu.name && (
-                   <ul className="bg-gray-50 rounded-lg mb-4">
+                   <ul className="bg-gray-50 rounded-lg mb-4 overflow-hidden animate-in slide-in-from-top-1 duration-200">
                      {menu.items?.map((sub) => (
-                       <li key={sub} className="py-3 px-6 text-[12px] font-bold text-gray-600 border-l-4 border-transparent active:border-[#00B4D8]">{sub}</li>
+                       <li key={sub} className="py-3 px-6 text-[12px] font-bold text-gray-600 border-l-4 border-transparent active:border-[#00B4D8] active:bg-gray-100 active:text-[#00B4D8]">
+                         {sub}
+                       </li>
                      ))}
                    </ul>
                  )}
@@ -137,10 +167,10 @@ const Navbar = () => {
            </ul>
         </div>
 
-        {/* --- TOMBOL LOGIN ADMIN (DI BAWAH SIDEBAR) --- */}
+        {/* Footer Sidebar (Fixed Login Button) */}
         <div className="p-5 border-t border-gray-100 shrink-0 bg-white">
-          <button className="w-full bg-[#00B4D8] text-white h-[45px] rounded-lg font-black text-[13px] flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform">
-            <LogIn size={18} /> LOGIN ADMIN
+          <button className="w-full bg-[#00B4D8] text-white h-[48px] rounded-lg font-black text-[14px] flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all hover:bg-[#0096b4]">
+            <LogIn size={20} /> LOGIN ADMIN
           </button>
         </div>
       </div>
