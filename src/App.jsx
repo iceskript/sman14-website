@@ -12,6 +12,7 @@ import PrestasiSiswa from './components/PrestasiSiswa';
 import Testimoni from './components/Testimoni';
 import DataGuru from './components/DataGuru';
 import StatCounter from './components/StatCounter';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <PrestasiSiswa />
                 <Testimoni />
                 <DataGuru />
+                <Footer />
               </main>
               <ScrollToTop />
             </div>
