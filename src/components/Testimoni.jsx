@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 
 const Testimoni = () => {
   const alumniData = [
-    { id: 1, nama: "Najwaa Nur 'Azizah", universitas: "Universitas Mulawarman", pesan: "Kesan saya selama bersekolah di SMAPAS, saya mendapatkan banyak pengalaman seru dimana bisa ngobrol seru bareng teman dan juga guru-guru di SMAPAS, bimbingan belajar juga penuh dengan keseruan dan sangat membina saya untuk menjunjung prestasi saya.", img: "/alumni-1.jpg"},
+    { id: 1, nama: "Najwaa Nur 'Azizah", universitas: "Universitas Mulawarman", pesan: "Kesan saya selama bersekolah di SMAPAS, saya mendapatkan banyak pengalaman seru dimana bisa ngobrol seru bareng teman dan juga guru-guru di SMAPAS, bimbingan belajar juga penuh dengan keseruan dan sangat membina saya untuk menjunjung prestasi saya.", img: "/alumni-1.webp"},
     { id: 2, nama: "Nama Alumni", universitas: "Universitas B", pesan: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", img: "/alumni-2.jpg" },
     { id: 3, nama: "Nama Alumni", universitas: "Universitas C", pesan: "Pembelajaran di SMAPAS memberikan fondasi yang sangat kuat bagi karir akademik saya selanjutnya.", img: "/alumni-3.jpg" },
     { id: 4, nama: "Nama Alumni", universitas: "Universitas D", pesan: "Kekeluargaan dan bimbingan guru-guru di SMAN 14 Samarinda adalah kenangan yang tidak terlupakan.", img: "/alumni-4.jpg" },
