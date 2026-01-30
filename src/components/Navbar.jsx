@@ -97,7 +97,7 @@ const Navbar = () => {
             {/* Branding Logo */}
             <div className="flex items-center gap-[10px] lg:gap-[15px] cursor-pointer" onClick={() => navigate('/')}>
               <div className="w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] flex items-center justify-center shrink-0">
-                <img src="/logo-smapas.png" alt="Logo SMAN 14" className="max-w-full max-h-full object-contain" />
+                <img src="/logo-smapas.svg" alt="Logo SMAN 14" className="max-w-full max-h-full object-contain" />
               </div>
               <div className="flex flex-col justify-center text-left">
                 <h1 className="text-[16px] lg:text-[20px] font-[900] text-black leading-none uppercase tracking-tight">
@@ -157,7 +157,7 @@ const Navbar = () => {
       <div className={`fixed top-0 right-0 h-full w-[85%] max-w-[350px] bg-white z-[200] shadow-2xl transition-transform duration-300 ease-in-out transform xl:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex justify-between items-center p-5 border-b border-gray-100 shrink-0">
            <div className="w-[40px] h-[40px] flex items-center justify-center cursor-pointer" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
-             <img src="/logo-smapas.png" alt="Logo" className="max-w-full max-h-full object-contain" />
+             <img src="/logo-smapas.svg" alt="Logo" className="max-w-full max-h-full object-contain" />
            </div>
            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
              <X size={28} />
