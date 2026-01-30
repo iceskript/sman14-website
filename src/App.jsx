@@ -10,6 +10,7 @@ import VisiMisi from './components/VisiMisi';
 import ProgramUnggulan from './components/ProgramUnggulan';
 import PrestasiSiswa from './components/PrestasiSiswa';
 import Testimoni from './components/Testimoni';
+import DataGuru from './components/DataGuru';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <ProgramUnggulan />
                 <PrestasiSiswa />
                 <Testimoni />
+                <DataGuru />
               </main>
               <ScrollToTop />
             </div>

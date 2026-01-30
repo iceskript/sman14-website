@@ -18,3 +18,7 @@ html, body {
 html {
   scroll-behavior: smooth;
 }
+
+.animated-element {
+  will-change: transform, opacity;
+}

@@ -5,20 +5,20 @@ const ProgramUnggulan = () => {
   const programData = [
     {
       id: 1,
-      title: "Pembelajaran Berbasis Teknologi",
-      desc: "Implementasi media pembelajaran inovatif untuk meningkatkan motivasi dan efektivitas belajar siswa di era digital.",
+      title: "Pembelajaran berbasis Teknologi",
+      desc: "Proses pembelajaran berbasis teknologi dapat menciptakan siswa yang mampu bereksplorasi, berkreatifitas, menyesuaikan diri dengan perkembangan zaman, dan tentunya menambah wawasan dan ilmu pengetahuan.",
       img: "/program-1.jpg", 
     },
     {
       id: 2,
       title: "Ekstrakurikuler",
-      desc: "Wadah pengembangan bakat dan minat siswa melalui berbagai kegiatan non-akademik yang variatif dan kompetitif.",
+      desc: "Sebagai wadah untuk mengembangkan minat dan bakat, memperluas pengalaman bersosialisasi, praktik keterampilan berkomunikasi, dan internalisasi nilai-nilai karakter.",
       img: "/program-2.jpg",
     },
     {
       id: 3,
       title: "Life Skills",
-      desc: "Pembekalan keterampilan hidup dan karakter untuk mencetak lulusan yang mandiri dan siap menghadapi tantangan masa depan.",
+      desc: "Meningkatkan keterampilan, pengetahuan dan sikap belajar di bidang pekerjaan/usaha tertentu sesuai dengan minat dan bakat. perkembangan fisik dan jiwa serta potensi lingkungannya, sehingga diharapkan siswa memiliki bekal dimasa depan.",
       img: "/program-3.jpg",
     },
   ];
@@ -30,50 +30,48 @@ const ProgramUnggulan = () => {
         {/* --- HEADER SECTION --- */}
         <div className="flex flex-col items-start mb-16">
           <div className="flex items-center gap-6 mb-2">
-            <span className="text-[#888888] font-[900] tracking-[0.3em] uppercase text-[18px] lg:text-[20px] whitespace-nowrap">
+            <span className="text-[#888888] font-[900] tracking-[0.3em] uppercase text-[16px] lg:text-[18px] whitespace-nowrap">
               Our Program
             </span>
-            <div className="w-24 lg:w-32 h-[3px] bg-[#BCBCBC] rounded-full" />
+            <div className="w-24 lg:w-32 h-[2px] bg-[#334155] opacity-50" />
           </div>
           
-          <h2 className="text-[28px] lg:text-[36px] font-[900] text-black uppercase tracking-tight -ml-[1px] lg:-ml-[2px]">
+          <h2 className="text-[32px] lg:text-[44px] font-[600] text-[#1A1A1A] uppercase tracking-tight">
             Program Unggulan
           </h2>
         </div>
 
-        {/* --- GRID KARTU DENGAN DROP SHADOW --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        {/* --- GRID KARTU --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {programData.map((item) => (
             <motion.div
               key={item.id}
-              whileHover={{ 
-                y: -15,
-                transition: { duration: 0.4, ease: "easeOut" }
-              }}
-              className="bg-white rounded-[40px] overflow-hidden flex flex-col h-full border border-[#F5F5F5] shadow-2xl drop-shadow-[0_20px_20px_rgba(0,0,0,0.05)]"
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-[10px] overflow-hidden flex flex-col h-full border border-gray-100 shadow-lg"
             >
-              {/* Image Layer - Garis X (SVG) Sudah Dihapus */}
-              <div className="relative h-[300px] bg-[#F8F8F8] overflow-hidden group">
+              {/* Image Container */}
+              <div className="relative h-[250px] overflow-hidden group">
                 <img 
                   src={item.img} 
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/600x400?text=SMAPAS+Program'; }}
                 />
               </div>
 
               {/* Content Layer */}
-              <div className="p-10 lg:p-12 pt-8 flex flex-col flex-grow">
-                {/* Badge Nomor */}
-                <div className="w-12 h-12 bg-[#00B4D8] text-white flex items-center justify-center font-black rounded-xl mb-8 shadow-lg shadow-[#00B4D8]/30 text-xl">
-                  {item.id}
+              <div className="p-8 flex flex-col flex-grow">
+                {/* NOMOR DI BAWAH GAMBAR (Sesuai tanda hijau) */}
+                <div className="bg-[#00B4D8] text-white w-10 h-7 flex items-center justify-center font-bold text-sm mb-4">
+                  #{item.id}
                 </div>
 
-                <h3 className="text-[24px] lg:text-[26px] font-black text-[#1A1A1A] mb-5 leading-tight">
+                <h3 className="text-[22px] lg:text-[24px] font-bold text-[#334155] mb-4 leading-tight">
                   {item.title}
                 </h3>
                 
-                <p className="text-[#666666] font-semibold leading-relaxed text-[16px] lg:text-[17px] opacity-90">
+                <p className="text-[#64748b] font-normal leading-relaxed text-[15px] lg:text-[16px]">
                   {item.desc}
                 </p>
               </div>
