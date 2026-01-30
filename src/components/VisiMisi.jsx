@@ -45,69 +45,85 @@ const VisiMisi = () => {
           />
         </div>
 
-        {/* Slanted Slider Container dengan Shadow Lebih Mendalam */}
-        <div className="flex flex-col lg:flex-row h-[600px] w-full lg:skew-x-[-10deg] overflow-hidden rounded-[40px] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)] bg-gray-900 border-none ring-1 ring-black/5">
+        {/* Container Utama:
+          - rounded-[20px] -> Membuat sudut sedikit melengkung (elegan).
+          - skew-x tetap ada untuk efek miring.
+        */}
+        <div className="flex flex-col lg:flex-row h-[600px] w-full lg:skew-x-[-10deg] overflow-hidden rounded-[20px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-gray-900 border-none ring-1 ring-black/5 transform-gpu">
           {dataVisiMisi.map((item, index) => (
             <motion.div
               key={index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="relative h-full transition-all duration-700 ease-[0.23, 1, 0.32, 1] cursor-pointer overflow-hidden border-r border-white/5 last:border-none"
+              // Transisi flex-grow yang smooth
+              layout
+              transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }} 
+              className="relative h-full overflow-hidden border-r border-white/5 last:border-none cursor-pointer"
               style={{
-                flex: hoveredIndex === index ? 3.5 : 1,
+                flex: hoveredIndex === index ? 3.5 : 1, // Logika pelebaran
               }}
             >
-              {/* Image Layer */}
-              <div className="absolute inset-0 lg:skew-x-[10deg] scale-[1.8] transform-gpu">
+              {/* Image Layer - Menggunakan will-change untuk performa */}
+              <div className="absolute inset-0 lg:skew-x-[10deg] scale-[1.8] transform-gpu will-change-transform">
                 <img 
                   src={item.img} 
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-1000"
+                  className="w-full h-full object-cover transition-all duration-1000 ease-out"
                   style={{ 
-                    transform: hoveredIndex === index ? 'scale(1.15)' : 'scale(1)',
-                    filter: hoveredIndex === index ? 'brightness(0.7)' : 'brightness(0.5)'
+                    // Scale hanya pada gambar, tidak mempengaruhi layout parent
+                    transform: hoveredIndex === index ? 'scale(1.1)' : 'scale(1)',
+                    filter: hoveredIndex === index ? 'brightness(0.6)' : 'brightness(0.4)'
                   }}
                 />
-                {/* Efek Shadow di dalam (Inner Shadow) untuk menambah dimensi */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
               </div>
 
               {/* Content Layer */}
-              <div className="absolute inset-0 p-10 lg:p-16 flex flex-col justify-end lg:skew-x-[10deg] text-white">
-                <motion.div layout className="relative z-10">
+              <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end lg:skew-x-[10deg] text-white pointer-events-none">
+                {/* Wrapper konten agar tidak ikut 'tergencet' saat flex berubah.
+                  min-w-[300px] menjaga teks tetap utuh meski container menyempit.
+                */}
+                <div className="relative z-10 min-w-[300px]">
                   
-                  <h3 className={`font-[1000] uppercase tracking-wider leading-tight transition-all duration-500 drop-shadow-md ${
-                    hoveredIndex === index 
-                      ? 'text-[28px] lg:text-[38px] mb-6' 
-                      : 'text-[18px] lg:text-[22px] mb-0 opacity-80'
-                  }`}>
+                  {/* Judul: Posisinya absolut/fixed relative terhadap container agar tidak lompat */}
+                  <motion.h3 
+                    layout="position"
+                    className={`font-[900] uppercase tracking-wider leading-tight transition-colors duration-300 drop-shadow-md origin-bottom-left ${
+                      hoveredIndex === index 
+                        ? 'text-[32px] lg:text-[40px] mb-6 text-white' 
+                        : 'text-[20px] lg:text-[24px] mb-0 text-white/70'
+                    }`}
+                  >
                     {item.title}
-                  </h3>
+                  </motion.h3>
 
-                  <AnimatePresence>
+                  {/* Deskripsi & Tombol: Hanya muncul saat hover */}
+                  <AnimatePresence mode="wait">
                     {hoveredIndex === index && (
                       <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                        className="pointer-events-auto" // Aktifkan pointer events hanya pada area ini
                       >
-                        <p className="text-[15px] lg:text-[17px] font-medium leading-relaxed max-w-[450px] text-white/90 mb-8 border-l-2 border-[#00B4D8] pl-5 drop-shadow-sm">
+                        <p className="text-[16px] lg:text-[17px] font-medium leading-relaxed max-w-[480px] text-white/90 mb-8 border-l-[3px] border-[#00B4D8] pl-5">
                           {item.desc}
                         </p>
                         
                         <motion.button 
-                          whileHover={{ gap: '16px', backgroundColor: '#00B4D8', color: '#ffffff' }}
+                          whileHover={{ x: 5, backgroundColor: '#00B4D8', color: '#fff' }}
                           whileTap={{ scale: 0.95 }}
-                          className="flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-[1000] text-[11px] uppercase tracking-[0.15em] transition-all duration-300 shadow-2xl"
+                          className="flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-[800] text-[12px] uppercase tracking-[0.2em] transition-colors shadow-xl"
                         >
                           Selengkapnya
-                          <ArrowRight size={15} strokeWidth={3} />
+                          <ArrowRight size={16} strokeWidth={3} />
                         </motion.button>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+
+                </div>
               </div>
             </motion.div>
           ))}

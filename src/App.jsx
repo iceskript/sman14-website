@@ -11,6 +11,7 @@ import ProgramUnggulan from './components/ProgramUnggulan';
 import PrestasiSiswa from './components/PrestasiSiswa';
 import Testimoni from './components/Testimoni';
 import DataGuru from './components/DataGuru';
+import StatCounter from './components/StatCounter';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Navbar />
               <main>
                 <Hero />
+                <StatCounter />
                 <Sambutan />
                 <LatestNews />
                 <VisiMisi />

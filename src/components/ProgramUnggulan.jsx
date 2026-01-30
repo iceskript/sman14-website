@@ -27,16 +27,16 @@ const ProgramUnggulan = () => {
     <section className="py-24 bg-white font-urbanist overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-5 lg:px-[100px]">
         
-        {/* --- HEADER SECTION --- */}
+        {/* --- HEADER SECTION --- (DISAMAKAN DENGAN ACHIEVEMENT) */}
         <div className="flex flex-col items-start mb-16">
           <div className="flex items-center gap-6 mb-2">
-            <span className="text-[#888888] font-[900] tracking-[0.3em] uppercase text-[16px] lg:text-[18px] whitespace-nowrap">
+            <span className="text-[#888888] font-[900] tracking-[0.3em] uppercase text-[18px] lg:text-[20px] whitespace-nowrap">
               Our Program
             </span>
-            <div className="w-24 lg:w-32 h-[2px] bg-[#334155] opacity-50" />
+            <div className="w-24 lg:w-32 h-[3px] bg-[#BCBCBC] rounded-full" />
           </div>
           
-          <h2 className="text-[32px] lg:text-[44px] font-[600] text-[#1A1A1A] uppercase tracking-tight">
+          <h2 className="text-[28px] lg:text-[36px] font-[900] text-black uppercase tracking-tight -ml-[1px] lg:-ml-[2px]">
             Program Unggulan
           </h2>
         </div>
@@ -62,7 +62,6 @@ const ProgramUnggulan = () => {
 
               {/* Content Layer */}
               <div className="p-8 flex flex-col flex-grow">
-                {/* NOMOR DI BAWAH GAMBAR (Sesuai tanda hijau) */}
                 <div className="bg-[#00B4D8] text-white w-10 h-7 flex items-center justify-center font-bold text-sm mb-4">
                   #{item.id}
                 </div>

@@ -1,31 +1,44 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Sambutan = () => {
+  // Konfigurasi animasi dasar agar konsisten
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+  };
+
   return (
-    /* PENTING: id="sambutan" harus sama dengan href di Hero. scroll-mt agar tidak tertutup Navbar */
     <section id="sambutan" className="relative w-full py-16 lg:py-24 bg-[#F8FAFC] font-urbanist scroll-mt-24">
       <div className="max-w-[1440px] mx-auto px-5 lg:px-[80px]">
         
-        {/* Container Utama dengan Shadow Tebal & Background Putih Bersih */}
         <div className="relative flex flex-col lg:flex-row items-center gap-10 lg:gap-16 p-8 lg:p-14 rounded-3xl bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100">
           
-          {/* Sisi Kiri: Foto Kepala Sekolah (Syawal Arifin, S.S., M.Pd.) */}
+          {/* SISI KIRI: Foto Kepala Sekolah */}
           <div className="relative w-full lg:w-1/2 flex justify-center">
-            {/* Dekorasi Glow Biru di belakang foto */}
             <div className="absolute w-4/5 h-4/5 bg-[#00B0F1]/10 blur-[100px] rounded-full -z-10" />
             
-            <div className="relative overflow-hidden rounded-2xl shadow-lg border-4 border-white">
+            <motion.div 
+              {...fadeInUp}
+              className="relative overflow-hidden rounded-2xl shadow-lg border-4 border-white bg-gray-50"
+            >
               <img 
                 src="/kepala-sekolah.png" 
                 alt="Syawal Arifin, S.S., M.Pd." 
-                className="w-full h-auto object-cover max-h-[480px]"
+                className="w-full h-auto object-cover max-h-[480px] hover:scale-105 transition-transform duration-700"
                 onError={(e) => { e.target.src = "https://via.placeholder.com/600x800?text=Foto+Kepsek+SMA+14"; }}
               />
-            </div>
+            </motion.div>
           </div>
 
-          {/* Sisi Kanan: Konten Teks Sambutan */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center text-left">
+          {/* SISI KANAN: Konten Teks Sambutan */}
+          <motion.div 
+            {...fadeInUp}
+            transition={{ ...fadeInUp.transition, delay: 0.3 }} // Sedikit jeda setelah foto muncul
+            className="w-full lg:w-1/2 flex flex-col justify-center text-left"
+          >
             <h2 className="text-[30px] lg:text-[42px] font-[900] text-gray-900 leading-tight mb-2 uppercase tracking-tight">
               Syawal Arifin, S.S., M.Pd.
             </h2>
@@ -52,7 +65,6 @@ const Sambutan = () => {
               </p>
             </div>
 
-            {/* Tombol Interaktif Selengkapnya */}
             <button className="mt-10 group flex items-center gap-3 text-gray-900 font-[800] hover:text-[#00B4D8] transition-all w-fit">
               <span className="border-b-2 border-gray-900 group-hover:border-[#00B4D8] pb-1">
                 Baca Selengkapnya
@@ -61,7 +73,7 @@ const Sambutan = () => {
                 →
               </span>
             </button>
-          </div>
+          </motion.div>
 
         </div>
       </div>
