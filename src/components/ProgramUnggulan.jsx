@@ -48,35 +48,31 @@ const ProgramUnggulan = () => {
               key={item.id}
               whileHover={{ 
                 y: -15,
-                // Shadow akan menguat saat di-hover untuk efek mengangkat
-                shadow: "0 45px 100px rgba(0,0,0,0.12)" 
+                transition: { duration: 0.4, ease: "easeOut" }
               }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
               className="bg-white rounded-[40px] overflow-hidden flex flex-col h-full border border-[#F5F5F5] shadow-2xl drop-shadow-[0_20px_20px_rgba(0,0,0,0.05)]"
             >
+              {/* Image Layer - Garis X (SVG) Sudah Dihapus */}
               <div className="relative h-[300px] bg-[#F8F8F8] overflow-hidden group">
                 <img 
                   src={item.img} 
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  onError={(e) => { e.target.style.display = 'none'; }}
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/600x400?text=SMAPAS+Program'; }}
                 />
-                <div className="absolute inset-0 opacity-[0.1] pointer-events-none">
-                  <svg width="100%" height="100%">
-                    <line x1="0" y1="0" x2="100%" y2="100%" stroke="black" strokeWidth="2.5" />
-                    <line x1="100%" y1="0" x2="0" y2="100%" stroke="black" strokeWidth="2.5" />
-                  </svg>
-                </div>
               </div>
 
+              {/* Content Layer */}
               <div className="p-10 lg:p-12 pt-8 flex flex-col flex-grow">
-                {/* Shadow ditambahkan juga pada badge nomor agar konsisten */}
+                {/* Badge Nomor */}
                 <div className="w-12 h-12 bg-[#00B4D8] text-white flex items-center justify-center font-black rounded-xl mb-8 shadow-lg shadow-[#00B4D8]/30 text-xl">
                   {item.id}
                 </div>
+
                 <h3 className="text-[24px] lg:text-[26px] font-black text-[#1A1A1A] mb-5 leading-tight">
                   {item.title}
                 </h3>
+                
                 <p className="text-[#666666] font-semibold leading-relaxed text-[16px] lg:text-[17px] opacity-90">
                   {item.desc}
                 </p>

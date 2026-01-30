@@ -8,6 +8,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Login from './pages/Login';
 import VisiMisi from './components/VisiMisi';
 import ProgramUnggulan from './components/ProgramUnggulan';
+import PrestasiSiswa from './components/PrestasiSiswa';
+import Testimoni from './components/Testimoni';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
                 <LatestNews />
                 <VisiMisi />
                 <ProgramUnggulan />
+                <PrestasiSiswa />
+                <Testimoni />
               </main>
               <ScrollToTop />
             </div>
