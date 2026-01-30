@@ -37,7 +37,7 @@ const Login = () => {
           {/* SISI KIRI: ILUSTRASI (DIPERBAIKI AGAR TIDAK OFFSIDE) */}
           <div className="w-full md:w-1/2 h-[250px] md:h-full bg-white flex items-center justify-center p-6 overflow-hidden">
             <img 
-              src="/login-visual.png" 
+              src="/login-visual.webp" 
               alt="Visual SMAN 14" 
               className="w-full h-full object-contain" // Menggunakan object-contain agar logo utuh & tidak terpotong
             />

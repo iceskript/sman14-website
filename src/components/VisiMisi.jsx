@@ -35,7 +35,7 @@ const VisiMisi = () => {
             viewport={{ once: true }}
             className="text-[28px] lg:text-[36px] font-[900] text-[#333] tracking-tight uppercase"
           >
-            VISI & MISI
+            FOKUS PENDIDIKAN
           </motion.h2>
           <motion.div 
             initial={{ width: 0 }}
