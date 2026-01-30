@@ -33,7 +33,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0"
         style={{ 
-          backgroundImage: `url('/gedung-smapas.png')`,
+          backgroundImage: `url('/gedung-smapas.webp')`,
           backgroundSize: 'cover', 
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
