@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-
 const VisiMisi = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -24,11 +22,11 @@ const VisiMisi = () => {
   ];
 
   return (
-    <section className="py-24 bg-white font-urbanist overflow-hidden">
+    <section className="py-24 bg-white font-urbanist w-full overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-5 lg:px-[60px]">
         
         {/* Header Section */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -45,87 +43,76 @@ const VisiMisi = () => {
           />
         </div>
 
-        {/* Container Utama:
-          - rounded-[20px] -> Membuat sudut sedikit melengkung (elegan).
-          - skew-x tetap ada untuk efek miring.
+        {/* Container Utama: 
+            - Menggunakan rounded-[40px] agar lebih elegan
+            - Gambar tetap nyambung (tidak ada gap antar kartu)
+            - Overflow hidden untuk memotong sudut gambar di dalam
         */}
-        <div className="flex flex-col lg:flex-row h-[600px] w-full lg:skew-x-[-10deg] overflow-hidden rounded-[20px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-gray-900 border-none ring-1 ring-black/5 transform-gpu">
+        <div className="flex flex-col lg:flex-row h-[600px] w-full bg-gray-900 rounded-[40px] overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)] border border-gray-100">
           {dataVisiMisi.map((item, index) => (
-            <motion.div
+            <div
               key={index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              // Transisi flex-grow yang smooth
-              layout
-              transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }} 
-              className="relative h-full overflow-hidden border-r border-white/5 last:border-none cursor-pointer"
+              className="relative h-full overflow-hidden border-r border-white/10 last:border-none cursor-pointer transition-[flex] duration-700 ease-[0.32,0.72,0,1]"
               style={{
-                flex: hoveredIndex === index ? 3.5 : 1, // Logika pelebaran
+                flex: hoveredIndex === index ? 5 : 1, 
               }}
             >
-              {/* Image Layer - Menggunakan will-change untuk performa */}
-              <div className="absolute inset-0 lg:skew-x-[10deg] scale-[1.8] transform-gpu will-change-transform">
+              {/* Image Layer */}
+              <div className="absolute inset-0">
                 <img 
                   src={item.img} 
                   alt={item.title}
-                  className="w-full h-full object-cover transition-all duration-1000 ease-out"
+                  className="w-full h-full object-cover"
                   style={{ 
-                    // Scale hanya pada gambar, tidak mempengaruhi layout parent
-                    transform: hoveredIndex === index ? 'scale(1.1)' : 'scale(1)',
-                    filter: hoveredIndex === index ? 'brightness(0.6)' : 'brightness(0.4)'
+                    transform: hoveredIndex === index ? 'scale(1.05)' : 'scale(1.1)',
+                    filter: hoveredIndex === index ? 'brightness(0.5)' : 'brightness(0.3)',
+                    transition: 'transform 1.2s ease-out, filter 0.8s ease-in-out'
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                {/* Overlay yang lebih pekat di bawah agar teks putih "Pop-out" */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/20 to-transparent" />
               </div>
 
               {/* Content Layer */}
-              <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end lg:skew-x-[10deg] text-white pointer-events-none">
-                {/* Wrapper konten agar tidak ikut 'tergencet' saat flex berubah.
-                  min-w-[300px] menjaga teks tetap utuh meski container menyempit.
-                */}
-                <div className="relative z-10 min-w-[300px]">
+              <div className="absolute inset-0 p-10 lg:p-14 flex flex-col justify-end text-white pointer-events-none">
+                
+                {/* min-w-max mengunci teks agar tidak goyang/wrap saat transisi lebar */}
+                <div className="relative z-10 min-w-max">
                   
-                  {/* Judul: Posisinya absolut/fixed relative terhadap container agar tidak lompat */}
-                  <motion.h3 
-                    layout="position"
-                    className={`font-[900] uppercase tracking-wider leading-tight transition-colors duration-300 drop-shadow-md origin-bottom-left ${
+                  {/* Judul: Tetap stabil dan tajam */}
+                  <h3 
+                    className={`font-[900] uppercase tracking-wider leading-tight transition-all duration-500 drop-shadow-2xl ${
                       hoveredIndex === index 
-                        ? 'text-[32px] lg:text-[40px] mb-6 text-white' 
-                        : 'text-[20px] lg:text-[24px] mb-0 text-white/70'
+                        ? 'text-[30px] lg:text-[38px] mb-4 text-white opacity-100' 
+                        : 'text-[18px] lg:text-[20px] mb-0 text-white/40'
                     }`}
                   >
                     {item.title}
-                  </motion.h3>
+                  </h3>
 
-                  {/* Deskripsi & Tombol: Hanya muncul saat hover */}
-                  <AnimatePresence mode="wait">
-                    {hoveredIndex === index && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
-                        className="pointer-events-auto" // Aktifkan pointer events hanya pada area ini
-                      >
-                        <p className="text-[16px] lg:text-[17px] font-medium leading-relaxed max-w-[480px] text-white/90 mb-8 border-l-[3px] border-[#00B4D8] pl-5">
-                          {item.desc}
-                        </p>
-                        
-                        <motion.button 
-                          whileHover={{ x: 5, backgroundColor: '#00B4D8', color: '#fff' }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-[800] text-[12px] uppercase tracking-[0.2em] transition-colors shadow-xl"
+                  {/* Deskripsi */}
+                  <div className="h-24 overflow-hidden">
+                    <AnimatePresence>
+                      {hoveredIndex === index && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.4, delay: 0.3 }}
                         >
-                          Selengkapnya
-                          <ArrowRight size={16} strokeWidth={3} />
-                        </motion.button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
+                          <p className="text-[15px] lg:text-[17px] font-medium leading-relaxed max-w-[450px] text-white/80 border-l-[3px] border-[#00B4D8] pl-5 py-1">
+                            {item.desc}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
+
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

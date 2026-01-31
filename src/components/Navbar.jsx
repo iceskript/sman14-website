@@ -13,17 +13,14 @@ const Navbar = () => {
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
-        // PERBAIKAN: Jika lebar layar kurang dari 1024px (Mobile/Tablet), 
-        // Navbar selalu terlihat (isVisible = true) agar tidak tenggelam.
         if (window.innerWidth < 1024) {
           setIsVisible(true);
           return;
         }
 
-        // Fitur sembunyi hanya aktif di Desktop dan saat Menu Mobile tertutup
         if (!isMobileMenuOpen) {
           if (window.scrollY > lastScrollY && window.scrollY > 42) {
-            setIsVisible(false); // Sembunyikan Utility Bar (naik 42px)
+            setIsVisible(false); // Sembunyikan Utility Bar
           } else {
             setIsVisible(true);  // Munculkan kembali
           }
@@ -36,14 +33,31 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY, isMobileMenuOpen]);
 
+  // MENU ITEMS - DENGAN UPDATE PROFIL SEKOLAH
   const menuItems = [
     { name: 'BERANDA', dropdown: false, path: '/' },
-    { name: 'PROFIL', dropdown: true, items: ['Sejarah', 'Visi & Misi', 'Struktur Organisasi'] },
-    { name: 'BERITA', dropdown: true, items: ['Berita Terbaru', 'Pengumuman', 'Agenda'] },
-    { name: 'INFORMASI', dropdown: true, items: ['Pendaftaran', 'Kurikulum', 'Fasilitas'] },
-    { name: 'DATA', dropdown: true, items: ['Data Guru', 'Data Siswa', 'Alumni'] },
-    { name: 'EKSTRAKURIKULER', dropdown: false },
-    { name: 'GALERI', dropdown: false },
+    { 
+      name: 'PROFIL', 
+      dropdown: true, 
+      items: ['Profil Sekolah', 'Sejarah', 'Visi & Misi', 'Struktur Organisasi'] 
+    },
+    { 
+      name: 'BERITA', 
+      dropdown: true, 
+      items: ['Berita Terbaru', 'Pengumuman', 'Agenda'] 
+    },
+    { 
+      name: 'INFORMASI', 
+      dropdown: true, 
+      items: ['Pendaftaran', 'Kurikulum', 'Fasilitas'] 
+    },
+    { 
+      name: 'DATA', 
+      dropdown: true, 
+      items: ['Data Guru', 'Data Siswa', 'Alumni'] 
+    },
+    { name: 'EKSTRAKURIKULER', dropdown: false, path: '/ekstrakurikuler' },
+    { name: 'GALERI', dropdown: false, path: '/galeri' },
   ];
 
   return (
@@ -51,8 +65,6 @@ const Navbar = () => {
       {/* --- HEADER UTAMA --- */}
       <header 
         className={`fixed top-0 left-0 w-full font-urbanist bg-white shadow-md z-[100] transition-transform duration-500 ease-in-out ${
-          // translate-y-[-42px] hanya akan aktif jika isVisible false
-          // (yang mana isVisible hanya bisa false di layar desktop berdasarkan useEffect di atas)
           !isVisible ? 'translate-y-[-42px]' : 'translate-y-0'
         }`}
       >
@@ -133,9 +145,16 @@ const Navbar = () => {
                   </div>
 
                   {menu.dropdown && activeDropdown === menu.name && (
-                    <ul className="absolute left-0 top-full w-[200px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50">
+                    <ul className="absolute left-0 top-full w-[220px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50">
                       {menu.items.map((sub) => (
-                        <li key={sub} className="px-5 py-2.5 text-[12px] font-bold text-gray-700 hover:bg-gray-50 hover:text-[#00B4D8] transition-all border-b border-gray-50 last:border-none">
+                        <li 
+                          key={sub} 
+                          className="px-5 py-2.5 text-[12px] font-bold text-gray-700 hover:bg-gray-50 hover:text-[#00B4D8] transition-all border-b border-gray-50 last:border-none"
+                          onClick={() => {
+                            // Navigasi spesifik bisa ditambahkan di sini
+                            console.log(`Navigasi ke ${sub}`);
+                          }}
+                        >
                           {sub}
                         </li>
                       ))}
@@ -148,7 +167,7 @@ const Navbar = () => {
         </nav>
       </header>
 
-      {/* --- SIDEBAR MOBILE (Di luar header agar tidak ikut bergeser) --- */}
+      {/* --- SIDEBAR MOBILE --- */}
       <div 
         className={`fixed inset-0 bg-black/50 transition-opacity duration-300 xl:hidden z-[150] ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={() => setIsMobileMenuOpen(false)}

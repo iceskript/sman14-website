@@ -25,7 +25,7 @@ const Sambutan = () => {
               className="relative overflow-hidden rounded-2xl shadow-lg border-4 border-white bg-gray-50"
             >
               <img 
-                src="/kepala-sekolah.png" 
+                src="/kepala-sekolah.webp" 
                 alt="Syawal Arifin, S.S., M.Pd." 
                 className="w-full h-auto object-cover max-h-[480px] hover:scale-105 transition-transform duration-700"
                 onError={(e) => { e.target.src = "https://via.placeholder.com/600x800?text=Foto+Kepsek+SMA+14"; }}
@@ -67,7 +67,7 @@ const Sambutan = () => {
 
             <button className="mt-10 group flex items-center gap-3 text-gray-900 font-[800] hover:text-[#00B4D8] transition-all w-fit">
               <span className="border-b-2 border-gray-900 group-hover:border-[#00B4D8] pb-1">
-                Baca Selengkapnya
+                Profil SMA Negeri 14 Samarinda
               </span>
               <span className="text-xl group-hover:translate-x-2 transition-transform duration-300">
                 →
