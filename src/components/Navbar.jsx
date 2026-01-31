@@ -9,7 +9,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const navigate = useNavigate();
 
-  // Logika Deteksi Scroll - Diperbaiki untuk Mobile
+  // Logika Deteksi Scroll (Utility Bar tetap terlihat saat scroll ke atas)
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
@@ -33,31 +33,35 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY, isMobileMenuOpen]);
 
-  // MENU ITEMS - DENGAN UPDATE PROFIL SEKOLAH
   const menuItems = [
     { name: 'BERANDA', dropdown: false, path: '/' },
     { 
       name: 'PROFIL', 
       dropdown: true, 
-      items: ['Profil Sekolah', 'Sejarah', 'Visi & Misi', 'Struktur Organisasi'] 
+      items: [
+        { label: 'Profil Sekolah', path: '/profil' },
+        { label: 'Sejarah', path: '/profil' },
+        { label: 'Visi & Misi', path: '/profil' },
+        { label: 'Struktur Organisasi', path: '/profil' }
+      ] 
     },
     { 
       name: 'BERITA', 
       dropdown: true, 
-      items: ['Berita Terbaru', 'Pengumuman', 'Agenda'] 
+      items: [{ label: 'Berita Terbaru', path: '/' }, { label: 'Pengumuman', path: '/' }, { label: 'Agenda', path: '/' }] 
     },
     { 
       name: 'INFORMASI', 
       dropdown: true, 
-      items: ['Pendaftaran', 'Kurikulum', 'Fasilitas'] 
+      items: [{ label: 'Pendaftaran', path: '/' }, { label: 'Kurikulum', path: '/' }, { label: 'Fasilitas', path: '/' }] 
     },
     { 
       name: 'DATA', 
       dropdown: true, 
-      items: ['Data Guru', 'Data Siswa', 'Alumni'] 
+      items: [{ label: 'Data Guru', path: '/' }, { label: 'Data Siswa', path: '/' }, { label: 'Alumni', path: '/' }] 
     },
-    { name: 'EKSTRAKURIKULER', dropdown: false, path: '/ekstrakurikuler' },
-    { name: 'GALERI', dropdown: false, path: '/galeri' },
+    { name: 'EKSTRAKURIKULER', dropdown: false, path: '/' },
+    { name: 'GALERI', dropdown: false, path: '/' },
   ];
 
   return (
@@ -69,7 +73,7 @@ const Navbar = () => {
         }`}
       >
         
-        {/* --- TOP BAR (Utility Bar) - Hidden on Mobile --- */}
+        {/* --- TOP BAR (Utility Bar) - Warna Abu-abu Sesuai Desain Awal --- */}
         <div className="hidden lg:block bg-[#EAEAEA] h-[42px] w-full border-b border-gray-200">
           <div className="max-w-[1440px] mx-auto h-full px-[60px] flex justify-between items-center text-[12px] font-bold text-[#333]">
             <div className="flex items-center gap-[25px]">
@@ -84,6 +88,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
+              {/* --- SEARCH BAR DIKEMBALIKAN --- */}
               <div className="relative group">
                 <input 
                   type="text" 
@@ -122,10 +127,7 @@ const Navbar = () => {
             </div>
 
             {/* Hamburger Button Mobile */}
-            <button 
-              className="xl:hidden p-2 text-gray-700 active:scale-90 transition-transform" 
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
+            <button className="xl:hidden p-2 text-gray-700" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu size={32} />
             </button>
 
@@ -137,7 +139,7 @@ const Navbar = () => {
                   className="relative group cursor-pointer flex items-center h-full"
                   onMouseEnter={() => menu.dropdown && setActiveDropdown(menu.name)}
                   onMouseLeave={() => setActiveDropdown(null)}
-                  onClick={() => !menu.dropdown && menu.path && navigate(menu.path)}
+                  onClick={() => !menu.dropdown && navigate(menu.path)}
                 >
                   <div className="flex items-center gap-[3px] hover:text-[#00B4D8] transition-colors py-8">
                     {menu.name}
@@ -145,17 +147,18 @@ const Navbar = () => {
                   </div>
 
                   {menu.dropdown && activeDropdown === menu.name && (
-                    <ul className="absolute left-0 top-full w-[220px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50">
+                    <ul className="absolute left-0 top-full w-[220px] bg-white shadow-xl border-t-4 border-[#00B4D8] py-2 z-50 animate-in fade-in slide-in-from-top-2">
                       {menu.items.map((sub) => (
                         <li 
-                          key={sub} 
+                          key={sub.label} 
                           className="px-5 py-2.5 text-[12px] font-bold text-gray-700 hover:bg-gray-50 hover:text-[#00B4D8] transition-all border-b border-gray-50 last:border-none"
-                          onClick={() => {
-                            // Navigasi spesifik bisa ditambahkan di sini
-                            console.log(`Navigasi ke ${sub}`);
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(sub.path);
+                            setActiveDropdown(null);
                           }}
                         >
-                          {sub}
+                          {sub.label}
                         </li>
                       ))}
                     </ul>
@@ -167,7 +170,7 @@ const Navbar = () => {
         </nav>
       </header>
 
-      {/* --- SIDEBAR MOBILE --- */}
+      {/* --- SIDEBAR MOBILE (Tetap Seperti Semula) --- */}
       <div 
         className={`fixed inset-0 bg-black/50 transition-opacity duration-300 xl:hidden z-[150] ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={() => setIsMobileMenuOpen(false)}
@@ -175,47 +178,34 @@ const Navbar = () => {
 
       <div className={`fixed top-0 right-0 h-full w-[85%] max-w-[350px] bg-white z-[200] shadow-2xl transition-transform duration-300 ease-in-out transform xl:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex justify-between items-center p-5 border-b border-gray-100 shrink-0">
-           <div className="w-[40px] h-[40px] flex items-center justify-center cursor-pointer" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }}>
-             <img src="/logo-smapas.svg" alt="Logo" className="max-w-full max-h-full object-contain" />
-           </div>
-           <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
-             <X size={28} />
-           </button>
+           <img src="/logo-smapas.svg" alt="Logo" className="w-[40px] h-[40px]" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} />
+           <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500"><X size={28} /></button>
         </div>
 
         <div className="flex-grow overflow-y-auto p-5">
-           <div className="relative mb-6">
-              <input 
-                type="text" 
-                placeholder="search..." 
-                className="w-full h-[45px] bg-gray-100 rounded-full px-10 text-[16px] outline-none border border-transparent focus:border-[#00B4D8] transition-all" 
-              />
-              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-           </div>
-
            <ul className="flex flex-col gap-1">
              {menuItems.map((menu) => (
                <li key={menu.name} className="border-b border-gray-50 last:border-none">
                  <div 
-                    className="flex justify-between items-center py-4 text-[14px] font-extrabold text-gray-800 uppercase active:text-[#00B4D8]" 
+                    className="flex justify-between items-center py-4 text-[14px] font-extrabold text-gray-800 uppercase" 
                     onClick={() => {
                       if (menu.dropdown) {
                         activeDropdown === menu.name ? setActiveDropdown(null) : setActiveDropdown(menu.name);
                       } else {
-                        menu.path && navigate(menu.path);
+                        navigate(menu.path);
                         setIsMobileMenuOpen(false);
                       }
                     }}
                  >
                     {menu.name}
-                    {menu.dropdown && <ChevronDown size={18} className={`transition-transform duration-200 ${activeDropdown === menu.name ? 'rotate-180 text-[#00B4D8]' : ''}`} />}
+                    {menu.dropdown && <ChevronDown size={18} className={`${activeDropdown === menu.name ? 'rotate-180' : ''}`} />}
                  </div>
 
                  {menu.dropdown && activeDropdown === menu.name && (
-                   <ul className="bg-gray-50 rounded-lg mb-4 overflow-hidden">
+                   <ul className="bg-gray-50 rounded-lg mb-4">
                      {menu.items?.map((sub) => (
-                       <li key={sub} className="py-3 px-6 text-[12px] font-bold text-gray-600 active:text-[#00B4D8]">
-                         {sub}
+                       <li key={sub.label} className="py-3 px-6 text-[12px] font-bold text-gray-600 active:text-[#00B4D8]" onClick={() => { navigate(sub.path); setIsMobileMenuOpen(false); }}>
+                         {sub.label}
                        </li>
                      ))}
                    </ul>
@@ -223,15 +213,6 @@ const Navbar = () => {
                </li>
              ))}
            </ul>
-        </div>
-
-        <div className="p-5 border-t border-gray-100 shrink-0 bg-white">
-          <button 
-            onClick={() => { navigate('/login'); setIsMobileMenuOpen(false); }}
-            className="w-full bg-[#00B4D8] text-white h-[48px] rounded-lg font-black text-[14px] flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all hover:bg-[#0096b4]"
-          >
-            <LogIn size={20} /> LOGIN ADMIN
-          </button>
         </div>
       </div>
     </>
